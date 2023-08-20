@@ -1,0 +1,31 @@
+World: world
+
+Day: 20
+Month: 2
+Year: 1998
+
+FirstMonth: "January"
+SecondMonth: "February"
+ThirdMonth: "March"
+FourthMonth: "April"
+FifthMonth: "May"
+SixthMonth: "June"
+SeventhMonth: "July"
+EighthMonth: "August"
+NinthMonth: "September"
+TenthMonth: "October"
+EleventhMonth: "November"
+TwelthMonth: "December"
+
+FirstMonthDays: 31
+SecondMonthDays: 28
+ThirdMonthDays: 31
+FourthMonthDays: 30
+FifthMonthDays: 31
+SixthMonthDays: 30
+SeventhMonthDays: 31
+EighthMonthDays: 31
+NinthMonthDays: 30
+TenthMonthDays: 31
+EleventhMonthDays: 30
+TwelthMonthDays: 31
