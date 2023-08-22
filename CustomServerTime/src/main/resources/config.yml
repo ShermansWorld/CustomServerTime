@@ -1,0 +1,78 @@
+# ========================================
+# |   CustomServerTime by ShermansWorld  |
+# ========================================
+
+# Source: https://github.com/ShermansWorld/CustomServerTime
+
+# This file contains configuration options for the plugin.
+# To change the current date edit the "date.yml" file.
+
+# !! Do not change this !!
+config-version: 3
+
+# =====================================
+# |          GENERAL SETTINGS         |
+# =====================================
+
+
+# The world in which time will pass
+World: world
+
+# The names of each month along with size in days
+Months:
+  1:
+    Name: "January"
+    Length: 31
+  2:
+    Name: "February"
+    Length: 28
+  3:
+    Name: "March"
+    Length: 31
+  4:
+    Name: "April"
+    Length: 30
+  5:
+    Name: "May"
+    Length: 31
+  6:
+    Name: "June"
+    Length: 30
+  7:
+    Name: "July"
+    Length: 31
+  8:
+    Name: "August"
+    Length: 31
+  9:
+    Name: "September"
+    Length: 30
+  10:
+    Name: "October"
+    Length: 31
+  11:
+    Name: "November"
+    Length: 30
+  12:
+    Name: "December"
+    Length: 31
+    
+
+# =====================================
+# |              OPTIONS              |
+# =====================================
+
+# If no players are online in the server, pause the day counter.
+PauseTimerIfNoPlayersOnline: true
+
+# The date mode is used to determine the format in which to display
+# Placeholders:
+#  @DAY - The day value
+#  @DAY_SUFFIX - The suffix of the day value (i.e. the 'st' in '21st')
+#  @MONTH - The number value of the month
+#  @MONTH_NAME - The name of the month
+#  @MONTH_LENGTH - The length of the month
+#  @YEAR - The year value
+
+# The format with default configuration will appear as "February 20th, 1998"
+DateFormat: "@MONTH_NAME @DAY@DAY_SUFFIX, @YEAR"

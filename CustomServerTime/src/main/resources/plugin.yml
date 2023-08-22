@@ -1,0 +1,10 @@
+name: CustomServerTime
+version: 2.0
+api-version: 1.19
+author: ShermansWorld
+main: me.ShermansWorld.CustomServerTime.CustomServerTime
+commands:
+  date:
+    description: Displays the server's date
+  customservertime:
+    description: Admin utility commands

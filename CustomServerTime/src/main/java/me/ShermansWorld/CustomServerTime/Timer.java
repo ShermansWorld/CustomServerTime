@@ -1,134 +1,68 @@
 package me.ShermansWorld.CustomServerTime;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import me.ShermansWorld.CustomServerTime.config.Config;
 
 public class Timer {
-	public static int days = Main.getInstance().getConfig().getInt("Day");
 
-	public static int months = Main.getInstance().getConfig().getInt("Month");
+	/**
+	 * Facilities the passage of time by counting days and updating data. 
+	 * Timer is based off Minecraft days.
+	 */
 
-	public static int years = Main.getInstance().getConfig().getInt("Year");
-
-	public static String generateDate() {
-		String monthString = "NULL";
-		switch (months) {
-		case 0:
-			monthString = Main.getInstance().getConfig().getString("FirstMonth");
-			break;
-		case 1:
-			monthString = Main.getInstance().getConfig().getString("SecondMonth");
-			break;
-		case 2:
-			monthString = Main.getInstance().getConfig().getString("ThirdMonth");
-			break;
-		case 3:
-			monthString = Main.getInstance().getConfig().getString("FourthMonth");
-			break;
-		case 4:
-			monthString = Main.getInstance().getConfig().getString("FifthMonth");
-			break;
-		case 5:
-			monthString = Main.getInstance().getConfig().getString("SixthMonth");
-			break;
-		case 6:
-			monthString = Main.getInstance().getConfig().getString("SeventhMonth");
-			break;
-		case 7:
-			monthString = Main.getInstance().getConfig().getString("EighthMonth");
-			break;
-		case 8:
-			monthString = Main.getInstance().getConfig().getString("NinthMonth");
-			break;
-		case 9:
-			monthString = Main.getInstance().getConfig().getString("TenthMonth");
-			break;
-		case 10:
-			monthString = Main.getInstance().getConfig().getString("EleventhMonth");
-			break;
-		case 11:
-			monthString = Main.getInstance().getConfig().getString("TwelthMonth");
-			break;
-		default:
-			return "ERROR with month";
-		}
-		String daySuffix = "th";
-		if (days + 1 == 2 || days + 1 == 22) {
-			daySuffix = "nd";
-		} else if (days + 1 == 3 || days + 1 == 23) {
-			daySuffix = "rd";
-		} else if (days + 1 == 1 || days + 1 == 21 || days + 1 == 31) {
-			daySuffix = "st";
-		}
-		return String.valueOf(monthString) + " " + String.valueOf(days + 1) + daySuffix + ", " + String.valueOf(years);
-	}
+	private static BukkitTask dayCounter;
 
 	public static void startTimer() {
-		final World w = Bukkit.getWorld(Main.getInstance().getConfig().getString("World"));
-		int[] id = new int[1];
-		id[0] = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) Main.getInstance(),
-				new Runnable() {
-					public void run() {
-						if (w == null || w.getPlayers().size() == 0)
-							return;
-						int monthDays = 30;
-						switch (months) {
-						case 0:
-							monthDays = Main.getInstance().getConfig().getInt("FirstMonthDays");
-							break;
-						case 1:
-							monthDays = Main.getInstance().getConfig().getInt("SecondMonthDays");
-							break;
-						case 2:
-							monthDays = Main.getInstance().getConfig().getInt("ThirdMonthDays");
-							break;
-						case 3:
-							monthDays = Main.getInstance().getConfig().getInt("FourthMonthDays");
-							break;
-						case 4:
-							monthDays = Main.getInstance().getConfig().getInt("FifthMonthDays");
-							break;
-						case 5:
-							monthDays = Main.getInstance().getConfig().getInt("SixthMonthDays");
-							break;
-						case 6:
-							monthDays = Main.getInstance().getConfig().getInt("SeventhMonthDays");
-							break;
-						case 7:
-							monthDays = Main.getInstance().getConfig().getInt("EighthMonthDays");
-							break;
-						case 8:
-							monthDays = Main.getInstance().getConfig().getInt("NinthMonthDays");
-							break;
-						case 9:
-							monthDays = Main.getInstance().getConfig().getInt("TenthMonthDays");
-							break;
-						case 10:
-							monthDays = Main.getInstance().getConfig().getInt("EleventhMonthDays");
-							break;
-						case 11:
-							monthDays = Main.getInstance().getConfig().getInt("TwelthMonthDays");
-							break;
+		dayCounter = new BukkitRunnable() {
+			public void run() {
+				// World is invalid, return to prevent error spam
+				if (Config.world == null) {
+					return;
+				}
+
+				// No players in the world, pause the passing of time
+				if (Config.pauseTimerIfNoPlayersOnline && Config.world.getPlayers().size() == 0) {
+					return;
+				}
+
+				// World time is just before midnight, update day
+				if (Config.world.getTime() >= 18000L && Config.world.getTime() < 18020L) {
+					// Add one to day
+					Config.date.setDay(Config.date.getDay() + 1);
+
+					// Set data
+					Config.dateData.getConfig().set("Day", Integer.valueOf(Config.date.getDay()));
+					Config.dateData.saveConfig();
+					
+					// if the day is past the last day in the current month
+					if (Config.date.getDay() > Config.date.getMonth().getLength()) {
+						// If the month is the last month in the year
+						if (Config.date.getMonth().equals(Config.months.get(Config.months.size() - 1))) {
+							// Reset year, add one year
+							Config.date.setMonth(Config.months.get(1));
+							Config.date.setYear(Config.date.getYear() + 1);
+						} else {
+							// Get next month in the year
+							Config.date.setMonth(Config.months.get(Config.date.getMonth().getID() + 1));
 						}
-						if (w.getTime() >= 18000L && w.getTime() < 18020L) {
-							Timer.days++;
-							Main.getInstance().getConfig().set("Day", Integer.valueOf(Timer.days));
-							Main.getInstance().saveConfig();
-						}
-						if (days + 1 >= monthDays) {
-							months++;
-							days = 0;
-							if (months >= 12) {
-								months = 0;
-								years++;
-							}
-							Main.getInstance().getConfig().set("Day", Integer.valueOf(days));
-							Main.getInstance().getConfig().set("Month", Integer.valueOf(months));
-							Main.getInstance().getConfig().set("Year", Integer.valueOf(years));
-							Main.getInstance().saveConfig();
-						}
+						// Reset day
+						Config.date.setDay(1);
+
+						// Set date
+						Config.dateData.getConfig().set("Day", Integer.valueOf(Config.date.getDay()));
+						Config.dateData.getConfig().set("Month", Integer.valueOf(Config.date.getMonth().getID()));
+						Config.dateData.getConfig().set("Year", Integer.valueOf(Config.date.getYear()));
+						Config.dateData.saveConfig();
 					}
-				}, 0L, 20L);
+				}
+			}
+		}.runTaskTimer(CustomServerTime.getInstance(), 0L, 20L); // Runs instantly, repeats every 1 sec
 	}
+	
+	public static void stopTimer() {
+		dayCounter.cancel();
+	}
+	
 }
