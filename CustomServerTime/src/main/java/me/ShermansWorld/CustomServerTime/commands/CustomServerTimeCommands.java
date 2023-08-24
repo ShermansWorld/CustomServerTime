@@ -10,10 +10,9 @@ import me.ShermansWorld.CustomServerTime.CustomServerTime;
 import me.ShermansWorld.CustomServerTime.config.Config;
 
 public class CustomServerTimeCommands implements CommandExecutor {
-	
+
 	/**
-	 * Command logic for /customservertime
-	 * These are admin utility commands.
+	 * Command logic for /customservertime These are admin utility commands.
 	 */
 
 	public CustomServerTimeCommands(CustomServerTime plugin) {
@@ -21,16 +20,24 @@ public class CustomServerTimeCommands implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		Player p = (Player) sender;
-		if (!p.hasPermission("customservertime.reload"))
-			p.sendMessage(ChatColor.RED + "[CustomServerTime] You do not have permission to do this");
 		if (args[0].equalsIgnoreCase("reload")) {
+			Player player;
+			if (sender instanceof Player) {
+				player = (Player) sender;
+				if (!player.hasPermission("customservertime.reload")) {
+					player.sendMessage(ChatColor.RED + "[CustomServerTime] You do not have permission to do this");
+					return false;
+				}
+				player.sendMessage(ChatColor.GOLD + "[CustomServerTime] config.yml reloaded");
+			} else {
+				sender.sendMessage("[CustomServerTime] config.yml reloaded");
+			}
 			Config.dateData.reloadConfig();
 			Config.dateData.saveDefaultConfig();
 			CustomServerTime.getInstance().reloadConfig();
 			CustomServerTime.getInstance().saveDefaultConfig();
 			Config.initConfigVals();
-			p.sendMessage(ChatColor.GOLD + "[CustomServerTime] config.yml reloaded");
+			return true;
 		}
 		return false;
 	}

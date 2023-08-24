@@ -57,13 +57,9 @@ Months:
     Name: "December"
     Length: 31
     
-
 # =====================================
 # |              OPTIONS              |
 # =====================================
-
-# If no players are online in the server, pause the day counter.
-PauseTimerIfNoPlayersOnline: true
 
 # The date mode is used to determine the format in which to display
 # Placeholders:

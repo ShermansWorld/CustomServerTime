@@ -45,7 +45,7 @@ public class ServerDate {
 		if (dateFormat.contains("@YEAR")) {
 			dateFormat = dateFormat.replaceAll("@YEAR", String.valueOf(year));
 		}
-		
+
 		return dateFormat;
 	}
 
@@ -54,10 +54,25 @@ public class ServerDate {
 		String dayString = String.valueOf(day);
 		switch (dayString.charAt(dayString.length() - 1)) {
 		case '1':
+			if (dayString.length() >= 2) {
+				if (dayString.charAt(dayString.length() - 2) == '1') {
+					return "th";
+				}
+			}
 			return "st";
 		case '2':
+			if (dayString.length() >= 2) {
+				if (dayString.charAt(dayString.length() - 2) == '1') {
+					return "th";
+				}
+			}
 			return "nd";
 		case '3':
+			if (dayString.length() >= 2) {
+				if (dayString.charAt(dayString.length() - 2) == '1') {
+					return "th";
+				}
+			}
 			return "rd";
 		default:
 			return "th";

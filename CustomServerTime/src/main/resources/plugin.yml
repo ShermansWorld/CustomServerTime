@@ -8,3 +8,9 @@ commands:
     description: Displays the server's date
   customservertime:
     description: Admin utility commands
+  finddate:
+    descripion: Translate epoch time into an in-game date
+permissions:
+  customservertime.reload:
+    description: Gives access to /customservertime reload
+    default: op

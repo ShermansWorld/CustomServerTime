@@ -20,9 +20,16 @@ public class DateCommands implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		Player p = (Player) sender;
-		p.sendMessage(
-				ChatColor.GREEN + "[CustomServerTime] The date is: " + ChatColor.YELLOW + Config.date.generateDate());
+		sendDateMsg(sender);
 		return true;
+	}
+
+	public static void sendDateMsg(CommandSender sender) {
+		if (sender instanceof Player) {
+			sender.sendMessage(ChatColor.GREEN + "[CustomServerTime] The date is: " + ChatColor.YELLOW
+					+ Config.date.generateDate());
+		} else {
+			sender.sendMessage("[CustomServerTime] The date is: " + Config.date.generateDate());
+		}
 	}
 }

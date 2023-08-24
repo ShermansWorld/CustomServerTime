@@ -1,6 +1,5 @@
 package me.ShermansWorld.CustomServerTime.config;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -30,7 +29,6 @@ public class Config {
 	public static World world;
 	public static ServerDate date;
 	public static HashMap<Integer, ServerMonth> months = new HashMap<Integer, ServerMonth>(); // Id, Month
-	public static boolean pauseTimerIfNoPlayersOnline;
 	public static String dateFormat;
 	
 	public static void initConfigVals() {
@@ -58,7 +56,6 @@ public class Config {
 		
 		
 		// Settings
-		pauseTimerIfNoPlayersOnline = config.getBoolean("PauseTimerIfNoPlayersOnline");
 		dateFormat = config.getString("DateFormat");
 		
 	}

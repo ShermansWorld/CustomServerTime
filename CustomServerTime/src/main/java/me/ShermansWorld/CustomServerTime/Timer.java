@@ -22,11 +22,6 @@ public class Timer {
 					return;
 				}
 
-				// No players in the world, pause the passing of time
-				if (Config.pauseTimerIfNoPlayersOnline && Config.world.getPlayers().size() == 0) {
-					return;
-				}
-
 				// World time is just before midnight, update day
 				if (Config.world.getTime() >= 18000L && Config.world.getTime() < 18020L) {
 					// Add one to day
@@ -39,7 +34,7 @@ public class Timer {
 					// if the day is past the last day in the current month
 					if (Config.date.getDay() > Config.date.getMonth().getLength()) {
 						// If the month is the last month in the year
-						if (Config.date.getMonth().equals(Config.months.get(Config.months.size() - 1))) {
+						if (Config.date.getMonth().equals(Config.months.get(Config.months.size()))) {
 							// Reset year, add one year
 							Config.date.setMonth(Config.months.get(1));
 							Config.date.setYear(Config.date.getYear() + 1);

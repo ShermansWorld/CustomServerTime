@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.ShermansWorld.CustomServerTime.commands.CustomServerTimeCommands;
 import me.ShermansWorld.CustomServerTime.commands.DateCommands;
+import me.ShermansWorld.CustomServerTime.commands.FindDateCommands;
 import me.ShermansWorld.CustomServerTime.config.Config;
 
 public class CustomServerTime extends JavaPlugin {
@@ -32,6 +33,7 @@ public class CustomServerTime extends JavaPlugin {
 		// Initialize Commands
 		new DateCommands(this);
 		new CustomServerTimeCommands(this);
+		new FindDateCommands(this);
 		
 		// PAPI support
 		new SpigotExpansion().register();
