@@ -145,8 +145,10 @@ public class FindDateCommands implements CommandExecutor {
 	private void sendHelpMsg(CommandSender sender) {
 		if (sender instanceof Player) {
 			sender.sendMessage(ChatColor.YELLOW + "[CustomServerTime] command usage: /finddate [epoch time]");
+			sender.sendMessage(ChatColor.YELLOW + "Epoch Time Converter: https://www.epochconverter.com/");
 		} else {
 			sender.sendMessage("[CustomServerTime] command usage: /finddate [epoch time]");
+			sender.sendMessage("Epoch Time Converter: https://www.epochconverter.com/");
 		}
 	}
 
